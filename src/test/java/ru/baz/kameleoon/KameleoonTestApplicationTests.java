@@ -58,7 +58,23 @@ class KameleoonTestApplicationTests {
 
         CountDownLatch latch = new CountDownLatch(NUMBER_OF_THREADS);
         for (int i = 0; i < NUMBER_OF_THREADS; i++) {
-            service.submit(getTask(latch, i));
+            int finalI = i;
+            Runnable runnable = () -> {
+                RestTemplate restTemplate = new RestTemplate();
+                HistoryDto historyDto = HistoryDto.builder()
+                        .id(1L)
+                        .accountId(1L)
+                        .quoteId(1L)
+                        .vote(1)
+                        .build();
+                RequestEntity<HistoryDto> requestEntity = new RequestEntity<>(historyDto, HttpMethod.POST,
+                        URI.create("http://localhost:" + webServerAppCtxt.getWebServer().getPort() + "/history"));
+                ResponseEntity<History> response = restTemplate.exchange(requestEntity, History.class);
+                log.debug("response {} {}", finalI, response.getBody());
+                latch.countDown();
+            };
+            service.submit(runnable);
+
         }
         latch.await();
         Quote resultQuote = quoteRepository.findById(1L).get();

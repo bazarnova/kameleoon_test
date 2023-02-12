@@ -1,6 +1,7 @@
 package ru.baz.kameleoon.service;
 
 import com.zaxxer.hikari.util.IsolationLevel;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,26 +20,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class HistoryService {
 
-    @Autowired
-    private HistoryRepository historyRepository;
+  private final HistoryRepository historyRepository;
 
-    @Autowired
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
-    @Autowired
-    private QuoteRepository quoteRepository;
+    private final QuoteRepository quoteRepository;
 
-    public HistoryService(HistoryRepository historyRepository, AccountRepository accountRepository, QuoteRepository quoteRepository) {
-        this.historyRepository = historyRepository;
-        this.accountRepository = accountRepository;
-        this.quoteRepository = quoteRepository;
-    }
-
-//    @Lock(LockModeType.PESSIMISTIC_READ)
-    @Transactional
+//    @Transactional
+    @Lock(LockModeType.PESSIMISTIC_READ)
     public HistoryDto save(HistoryDto historyDto) {
         Account account = accountRepository.findById(historyDto.getAccountId()).get();
         Quote quote = quoteRepository.findById(historyDto.getQuoteId()).get();

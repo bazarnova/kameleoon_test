@@ -1,5 +1,6 @@
 package ru.baz.kameleoon.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.baz.kameleoon.dto.QuoteDto;
@@ -13,17 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@RequiredArgsConstructor
 @Service
 public class QuoteService {
-    @Autowired
     private final QuoteRepository quoteRepository;
-    @Autowired
     private final AccountRepository accountRepository;
-
-    public QuoteService(QuoteRepository quoteRepository, AccountRepository accountRepository) {
-        this.quoteRepository = quoteRepository;
-        this.accountRepository = accountRepository;
-    }
 
     public QuoteDto save(@NotNull QuoteDto quoteDto) {
         Account account = accountRepository.findById(quoteDto.getAccountId()).get();
