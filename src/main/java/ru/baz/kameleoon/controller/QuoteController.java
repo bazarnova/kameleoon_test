@@ -1,5 +1,6 @@
 package ru.baz.kameleoon.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,45 +16,52 @@ import java.util.List;
 public class QuoteController {
     private final QuoteService quoteService;
 
+    @ApiOperation(value = "Create new quote", notes = "Returns created quote")
     @PostMapping(value = "/quote")
     @ResponseBody
-    public QuoteDto addQuote(@RequestBody QuoteDto quoteDto) {
+    public QuoteDto save(@RequestBody QuoteDto quoteDto) {
         return quoteService.save(quoteDto);
     }
 
+    @ApiOperation(value = "Update the quote", notes = "Returns updated quote")
     @PutMapping(value = "/quote")
     @ResponseBody
-    public QuoteDto updateQuote(@RequestBody QuoteDto quoteDto) {
+    public QuoteDto update(@RequestBody QuoteDto quoteDto) {
         return quoteService.update(quoteDto);
     }
 
+    @ApiOperation(value = "Get a quote by id", notes = "Returns a quote by id")
     @GetMapping(value = "/quote/{id}")
     @ResponseBody
-    public QuoteDto getQuote(@PathVariable Long id) {
+    public QuoteDto getById(@PathVariable Long id) {
         return quoteService.getById(id);
     }
 
+    @ApiOperation(value = "Get a random quote", notes = "Returns a random quote")
     @GetMapping(value = "/quote/any")
     @ResponseBody
-    public QuoteDto getRandomQuote() {
+    public QuoteDto getRandom() {
         return quoteService.getRandom();
     }
 
+    @ApiOperation(value = "Get the top ten quotes by accountId", notes = "Get the top ten quotes of the specified account")
     @GetMapping(value = "/quote/top/{account_id}")
     @ResponseBody
-    public List<QuoteDto> getTopQuotes(@PathVariable("account_id") Long accountId) {
+    public List<QuoteDto> getTop10ByAccountId(@PathVariable("account_id") Long accountId) {
         return quoteService.getTop(accountId);
     }
 
-    @GetMapping(value = "/quote/flop/{id}")
+    @ApiOperation(value = "Get the flop ten quotes by accountId", notes = "Get the flop ten quotes of the specified account")
+    @GetMapping(value = "/quote/flop/{account_id}")
     @ResponseBody
-    public List<QuoteDto> getFlopQuotes(@PathVariable Long id) {
-        return quoteService.getFlop(id);
+    public List<QuoteDto> getFlop10ByAccountId(@PathVariable("account_id") Long accountId) {
+        return quoteService.getFlop(accountId);
     }
 
+    @ApiOperation(value = "Remove quote by id", notes = "Returns true if the quote is removed")
     @DeleteMapping(value = "/quote/{id}")
     @ResponseBody
-    public boolean deleteQuote(@PathVariable Long id) {
+    public boolean delete(@PathVariable Long id) {
         return quoteService.delete(id);
     }
 }
