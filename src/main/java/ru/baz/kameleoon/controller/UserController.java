@@ -1,5 +1,6 @@
 package ru.baz.kameleoon.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,15 +9,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.baz.kameleoon.entity.Account;
 import ru.baz.kameleoon.service.AccountService;
 
+@RequiredArgsConstructor
 @Controller
 public class UserController {
 
-    @Autowired
     private final AccountService accountService;
-
-    public UserController(AccountService accountService) {
-        this.accountService = accountService;
-    }
 
     @PostMapping(value = "/user")
     @ResponseBody

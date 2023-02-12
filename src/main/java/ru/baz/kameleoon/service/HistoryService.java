@@ -1,7 +1,11 @@
 package ru.baz.kameleoon.service;
 
+import com.zaxxer.hikari.util.IsolationLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Lock;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.baz.kameleoon.dto.HistoryDto;
 import ru.baz.kameleoon.entity.Account;
 import ru.baz.kameleoon.entity.History;
@@ -10,6 +14,7 @@ import ru.baz.kameleoon.repository.AccountRepository;
 import ru.baz.kameleoon.repository.HistoryRepository;
 import ru.baz.kameleoon.repository.QuoteRepository;
 
+import javax.persistence.LockModeType;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -32,6 +37,8 @@ public class HistoryService {
         this.quoteRepository = quoteRepository;
     }
 
+//    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Transactional
     public HistoryDto save(HistoryDto historyDto) {
         Account account = accountRepository.findById(historyDto.getAccountId()).get();
         Quote quote = quoteRepository.findById(historyDto.getQuoteId()).get();

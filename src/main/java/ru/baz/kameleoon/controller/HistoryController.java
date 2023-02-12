@@ -1,5 +1,6 @@
 package ru.baz.kameleoon.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -10,14 +11,11 @@ import ru.baz.kameleoon.service.HistoryService;
 import java.util.Date;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Controller
 public class HistoryController {
-    @Autowired
-    private HistoryService historyService;
 
-    public HistoryController(HistoryService historyService) {
-        this.historyService = historyService;
-    }
+    private final HistoryService historyService;
 
     @PostMapping(value = "/history")
     @ResponseBody

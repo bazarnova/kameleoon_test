@@ -1,9 +1,5 @@
-#FROM maven:3-jdk-8-alpine
-#COPY . /usr/src/app
-#WORKDIR /usr/src/app
-#RUN mvn package
-#ENV PORT 5000
-#EXPOSE $PORT
-#CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]
-
-
+FROM openjdk:11
+COPY target/kameleoon-application.jar /opt
+WORKDIR /opt
+EXPOSE 8080
+CMD ["java", "-jar", "/opt/kameleoon-application.jar"]
