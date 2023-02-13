@@ -5,10 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import static org.springframework.boot.SpringApplication.run;
 
 @SpringBootApplication
-public class KameleoonTestApplication {
+public class KameleoonApplication {
 
     public static void main(String[] args) {
-        run(KameleoonTestApplication.class, args);
+        run(KameleoonApplication.class, args);
     }
 
 }

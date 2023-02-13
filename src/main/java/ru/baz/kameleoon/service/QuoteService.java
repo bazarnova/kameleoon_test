@@ -1,7 +1,6 @@
 package ru.baz.kameleoon.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.baz.kameleoon.dto.QuoteDto;
 import ru.baz.kameleoon.entity.Account;
